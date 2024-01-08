@@ -1,6 +1,6 @@
-/* src/App.css */
+
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   margin: 0;
   padding: 0;
   background-color: #f5f5f5;
@@ -12,7 +12,9 @@ body {
   padding: 20px;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: #333;
 }
 
@@ -21,7 +23,6 @@ a {
   text-decoration: none !important;
   cursor: pointer;
 }
-
 
 .user-card {
   background-color: #d1e6ff;
@@ -35,8 +36,27 @@ a {
   margin-top: 20px;
 }
 
-.user-card:hover{
-  box-shadow: 0 10px 15px -3px rgba(34, 151, 206, 0.315), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+.button-style {
+  background-color: #d1e6ff;
+  border: 1px solid #ddd;
+  padding: 10px 15px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px;
+  margin-top: 20px;
+  height: 45px;
+}
+
+.user-card:hover {
+  box-shadow: 0 10px 15px -3px rgba(34, 151, 206, 0.315),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.button-style:hover {
+  box-shadow: 0 10px 15px -3px rgba(34, 151, 206, 0.315),
+    0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
 .clock-section {
@@ -59,14 +79,14 @@ a {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
-}
-
-.user-details-section > div {
-  width: 48%;
+  padding: 20px 40px;
+  background-color: #bdc1c5;
+  border: 1px solid #ddd;
+  border-radius: 15px;
 }
 
 .posts-section {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .post-card {
@@ -87,13 +107,13 @@ a {
   min-width: 92px;
 }
 
-.postContainer{
-  display : grid;
+.postContainer {
+  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap : 20px
+  gap: 20px;
 }
 
-.dropDownCss{
+.dropDownCss {
   height: 45px;
   padding: 5px;
   border-radius: 5px;
