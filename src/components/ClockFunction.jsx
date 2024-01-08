@@ -1,23 +1,44 @@
 import React, { useState, useEffect } from 'react';
 
-function ClockFunction() {
+function ClockFunction(props) {
     const [time, setTime] = useState(new Date());
+    const [isPaused, setIsPaused] = useState(false);
+    const [pauseTime, setPauseTime] = useState(null);
+    console.log("time prop", props.selectedTime)
 
     useEffect(() => {
-        // Set up interval to update time every second
         const update = setInterval(() => {
-            setTime(new Date());
+            if (!isPaused) {
+                setTime(new Date());
+            }
         }, 1000);
 
-        // Clean up interval on component unmount
         return () => clearInterval(update);
-    }, []); // Empty dependency array ensures the effect runs only on mount and unmount
+    }, [isPaused]);
+
+    const handlePauseResumeClick = () => {
+        if (isPaused) {
+            // Resume the clock
+            setIsPaused(false);
+            const elapsedMilliseconds = new Date() - pauseTime;
+            setTime(new Date(time.getTime() + elapsedMilliseconds));
+            setPauseTime(null);
+        } else {
+            // Pause the clock
+            setIsPaused(true);
+            setPauseTime(new Date());
+        }
+    };
 
     return (
-        <div>
+        <div style={{display:"flex", gap:"50px"}}>
             <div className='clockDesign'>
-                {/* Print the time string prettily */}
                 {time.toLocaleTimeString()}
+            </div>
+            <div>
+                <button onClick={handlePauseResumeClick} className='dropDownCss'>
+                    {isPaused ? 'Resume' : 'Pause'}
+                </button>
             </div>
         </div>
     );

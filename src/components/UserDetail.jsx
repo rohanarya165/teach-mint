@@ -3,12 +3,15 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import ClockFunction from "./ClockFunction";
+import {convertTimeFormat} from "./timeConverter"
 
 const UserDetail = () => {
   const { userId } = useParams();
   const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
-  const [clockRunning, setClockRunning] = useState(true);
+  const [contries, setContries] = useState([]);
+  const [selectedCountry,setSelectedCountry] = useState([]);
+  const [selectedTime, setselectedTime] = useState("")
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -23,12 +26,25 @@ const UserDetail = () => {
       setPosts(postResponse.data);
     };
 
+    axios.get("http://worldtimeapi.org/api/timezone").then((res) => {
+      setContries(res.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+
     fetchUser();
   }, [userId]);
 
-  const handlePauseResume = () => {
-    setClockRunning(!clockRunning);
-  };
+  let selectCountryFn = (e) => {
+    setSelectedCountry(e.target.value)
+    axios.get(`http://worldtimeapi.org/api/timezone/${selectedCountry}`).then((res) => {
+      let time =  convertTimeFormat(res.data.datetime)   
+      console.log("res.data.datetime", time)
+         setselectedTime(time)
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
 
   return (
     <div className="container">
@@ -39,11 +55,12 @@ const UserDetail = () => {
       <h1>{user.name}'s Profile</h1>
       <div className="clock-section">
         <h2>Current Time</h2>
-        {/* <p>{clock}</p> */}
-        <ClockFunction />
-        <button onClick={handlePauseResume}>
-          {clockRunning ? "Pause" : "Resume"}
-        </button>
+        <select className="dropDownCss" onClick={selectCountryFn}>
+          {contries.map((country) => {
+            return <option value={country} >{country}</option>;
+          })}
+        </select>
+        <ClockFunction selectedTime={selectedTime}/>
       </div>
       <div className="user-details-section">
         <div>
@@ -66,13 +83,12 @@ const UserDetail = () => {
       <div className="posts-section">
         <h2>Posts</h2>
         <div className="postContainer">
-
-        {posts.map((post) => (
-          <div key={post.id} className="post-card">
-            <h3>{post.title}</h3>
-            <p>{post.body}</p>
-          </div>
-        ))}
+          {posts.map((post) => (
+            <div key={post.id} className="post-card">
+              <h3>{post.title}</h3>
+              <p>{post.body}</p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

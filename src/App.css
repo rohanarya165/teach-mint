@@ -92,6 +92,14 @@ a {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap : 20px
 }
+
+.dropDownCss{
+  height: 45px;
+  padding: 5px;
+  border-radius: 5px;
+  background: #d1e6ff;
+  min-width: 100px;
+}
 @media (max-width: 600px) {
   .user-details-section {
     flex-direction: column;
